@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { mockData, COLUMNS } from "./mockData";
 import { format, parse } from "date-fns";
 
@@ -8,7 +9,11 @@ import "./App.css";
 const PAGE_NUMBER_LIMIT = 2;
 
 const App = () => {
-  const { allRows, headers, nextPage, pageNumber, previousPage, rows } = useTable({
+  const {
+    headers,
+    pagination: { nextPage, pageNumber, previousPage, totalPages },
+    rows,
+  } = useTable({
     columns: COLUMNS,
     data: mockData,
     pagination: {
@@ -39,7 +44,7 @@ const App = () => {
       <div className="pagination">
         <button onClick={previousPage}>{"<"}</button>
         <span>
-          {pageNumber} - {allRows / PAGE_NUMBER_LIMIT}
+          {pageNumber} - {totalPages}
         </span>
         <button onClick={nextPage}>{">"}</button>
       </div>
