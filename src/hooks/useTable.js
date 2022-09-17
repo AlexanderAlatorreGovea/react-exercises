@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 const useTable = ({ columns, data, pagination }) => {
   const [pageIndex, setPageIndex] = useState(0);
@@ -41,6 +41,12 @@ const useTable = ({ columns, data, pagination }) => {
     );
   const previousPage = () =>
     setPageIndex((previousPageIndex) => Math.max(previousPageIndex - 1, 0));
+
+  useEffect(() => {
+    if (pageIndex > totalPages - 1) {
+      setPageIndex(totalPages - 1);
+    }
+  }, [pageIndex, totalPages, data.length, pagination.pageSize]);
 
   return {
     headers,

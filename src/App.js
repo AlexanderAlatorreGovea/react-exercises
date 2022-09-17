@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { mockData, COLUMNS } from "./mockData";
-import { format, parse } from "date-fns";
 
 import useTable from "./hooks";
 
@@ -9,13 +8,15 @@ import "./App.css";
 const PAGE_NUMBER_LIMIT = 2;
 
 const App = () => {
+  const [data, setData] = useState(mockData);
+
   const {
     headers,
     pagination: { nextPage, pageNumber, previousPage, totalPages },
     rows,
   } = useTable({
     columns: COLUMNS,
-    data: mockData,
+    data,
     pagination: {
       pageSize: PAGE_NUMBER_LIMIT,
     },
@@ -28,6 +29,7 @@ const App = () => {
           {headers.map(({ label }, index) => (
             <th key={index}>{label}</th>
           ))}
+          <th />
         </thead>
         <tbody>
           {rows.map((row, index) => {
@@ -36,6 +38,17 @@ const App = () => {
                 {row.cells.map((cell, idx) => (
                   <td key={idx}>{cell.renderValue}</td>
                 ))}
+                <td>
+                  <button
+                    onClick={() =>
+                      setData(
+                        data.filter((_, innerIndex) => index !== innerIndex)
+                      )
+                    }
+                  >
+                    x
+                  </button>
+                </td>
               </tr>
             );
           })}
@@ -47,6 +60,21 @@ const App = () => {
           {pageNumber} - {totalPages}
         </span>
         <button onClick={nextPage}>{">"}</button>
+        <button
+          onClick={() =>
+            setData([
+              ...data,
+              {
+                dateOfBirth: "1899-12-31",
+                favoriteFood: "Cheese",
+                id: "" + (data.length += 1),
+                name: "Alex" + Math.random(),
+              },
+            ])
+          }
+        >
+          Add Person
+        </button>
       </div>
     </div>
   );
