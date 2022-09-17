@@ -6,7 +6,13 @@ import useTable from "./hooks";
 import "./App.css";
 
 const App = () => {
-  const { headers, rows } = useTable({ columns: COLUMNS, data: mockData });
+  const {
+    headers,
+    rows,
+    pagination = {
+      pageSize: 2,
+    },
+  } = useTable({ columns: COLUMNS, data: mockData });
 
   return (
     <div className="App">
@@ -24,21 +30,13 @@ const App = () => {
               ))}
             </tr>
           ))}
-          {/* {mockData.map(({ id, name, favoriteFood, dateOfBirth }) => (
-            <tr key={id}>
-              <td>{id}</td>
-              <td>{name}</td>
-              <td>{favoriteFood}</td>
-              <td>
-                {format(
-                  parse(dateOfBirth, "yyyy-MM-dd", new Date()),
-                  "do MMMM yyyy"
-                )}
-              </td>
-            </tr>
-          ))} */}
         </tbody>
       </table>
+      <div className="pagination">
+        <button>{"<"}</button>
+        <span>1 -4</span>
+        <button>{">"}</button>
+      </div>
     </div>
   );
 };
