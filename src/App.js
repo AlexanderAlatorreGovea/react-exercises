@@ -5,14 +5,16 @@ import useTable from "./hooks";
 
 import "./App.css";
 
+const PAGE_NUMBER_LIMIT = 2;
+
 const App = () => {
-  const {
-    headers,
-    rows,
-    pagination = {
-      pageSize: 2,
+  const { allRows, headers, nextPage, pageNumber, previousPage, rows } = useTable({
+    columns: COLUMNS,
+    data: mockData,
+    pagination: {
+      pageSize: PAGE_NUMBER_LIMIT,
     },
-  } = useTable({ columns: COLUMNS, data: mockData });
+  });
 
   return (
     <div className="App">
@@ -23,19 +25,23 @@ const App = () => {
           ))}
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
-              {row.cells.map((cell, idx) => (
-                <td key={idx}>{cell.renderValue}</td>
-              ))}
-            </tr>
-          ))}
+          {rows.map((row, index) => {
+            return (
+              <tr key={index}>
+                {row.cells.map((cell, idx) => (
+                  <td key={idx}>{cell.renderValue}</td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className="pagination">
-        <button>{"<"}</button>
-        <span>1 -4</span>
-        <button>{">"}</button>
+        <button onClick={previousPage}>{"<"}</button>
+        <span>
+          {pageNumber} - {allRows / PAGE_NUMBER_LIMIT}
+        </span>
+        <button onClick={nextPage}>{">"}</button>
       </div>
     </div>
   );
