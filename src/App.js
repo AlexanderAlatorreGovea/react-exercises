@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { mockData, COLUMNS } from "./mockData";
 
+import { mockData, COLUMNS } from "./mockData/mockData";
 import useTable from "./hooks";
 
 import "./App.css";
