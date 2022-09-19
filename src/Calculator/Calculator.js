@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function TipCalculator() {
   // Write your code here.
@@ -6,15 +6,15 @@ export default function TipCalculator() {
   const [tip, setTip] = useState(18);
   const [numberOfPeople, setNumberOfPeople] = useState(1);
 
-  const tipPercentage = parseInt(tip) / 100;
-  const totalTip = (parseInt(bill) * tipPercentage).toFixed(2) || "-";
+  const totalTip = (bill * tip) / 100;
   const amountToPayPerPerson = totalTip / numberOfPeople;
+
   
   return (
     <>
       {/* Write your code here. */}
         <div>
-        <label for="bill">Bill</label>
+        <label htmlFor="bill">Bill</label>
         <input
           id="bill"
           type="number"
@@ -24,7 +24,7 @@ export default function TipCalculator() {
         />
       </div>
       <div>
-        <label for="tip">Tip</label>
+        <label htmlFor="tip">Tip</label>
         <input
           id="tip"
           type="number"
@@ -34,22 +34,22 @@ export default function TipCalculator() {
         />
       </div>
       <div>
-        <label for="people">Number of People</label>
+        <label htmlFor="people">Number of People</label>
         <input
           id="people"
           type="number"
-          min="0"
+          min="1"
           value={numberOfPeople}
           onChange={(e) => setNumberOfPeople(parseInt(e.target.value))}
         />
       </div>
-      <div>
-        <span>Total Tip:</span> <span>{totalTip}</span>
-      </div>
-      <div>
-        <span>Total Tip:</span>
-        <span>${amountToPayPerPerson.toFixed(2)}</span>
-      </div>
+     <p>
+     Total Tip: {isNaN(totalTip) ? "-" : `$${totalTip.toFixed(2)}`}
+     </p>
+    
+    <p>
+      Tip Per Person: {isNaN(amountToPayPerPerson) ? "-" : `$${amountToPayPerPerson.toFixed(2)}`}
+     </p>
     </>
   );
 }
