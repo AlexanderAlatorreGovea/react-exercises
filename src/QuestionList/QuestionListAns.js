@@ -9,6 +9,8 @@ const QuestionList = () => {
   const questionsByCategory = getQuestionsByCategory(questions);
   const submissionsByQuestion = getSubmissionsByQuestion(submissions);
 
+  const categories = Object.keys(questionsByCategory)
+
   return <div></div>;
 };
 
