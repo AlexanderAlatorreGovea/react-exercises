@@ -4,14 +4,62 @@ const QUESTIONS_API_BASE_URL = "https://api.frontendexpert.io/api/fe/questions";
 const SUBMISSIONS_API_BASE_URL =
   "https://api.frontendexpert.io/api/fe/submissions";
 
+const Question = ({ question, submissionsByQuestion }) => {
+  const submissionStatus = submissionsByQuestion[question.id];
+  const statusClass =
+    submissionStatus == null
+      ? "unattempted"
+      : submissionStatus.toLowerCase().replace("_", "-");
+
+  return (
+    <div className="question">
+      <div className={`status ${statusClass}`}></div>
+      <h3>{question.name}</h3>
+    </div>
+  );
+};
+
+const Category = ({ category, questions, submissionsByQuestion }) => {
+  const totalQuestions = questions.length;
+  const numQuestionsCorrect = questions.reduce((sum, question) => {
+    return submissionsByQuestion[question.id] === "CORRECT" ? sum + 1 : sum;
+  }, 0);
+
+  return (
+    <div className="category">
+      <h2>
+        {category} - {numQuestionsCorrect} / {totalQuestions}
+      </h2>
+      {questions.map((question) => (
+        <Question
+          key={question.id}
+          question={question}
+          submissionsByQuestion={submissionsByQuestion}
+        />
+      ))}
+    </div>
+  );
+};
+
 const QuestionList = () => {
   const [questions, submissions] = useQuestionsAndSubmissions();
   const questionsByCategory = getQuestionsByCategory(questions);
   const submissionsByQuestion = getSubmissionsByQuestion(submissions);
 
-  const categories = Object.keys(questionsByCategory)
+  const categories = Object.keys(questionsByCategory);
 
-  return <div></div>;
+  return (
+    <div>
+      {categories.map((category) => (
+        <Category
+          key={category}
+          category={category}
+          questions={questionsByCategory[category]}
+          submissionsByQuestion={submissionsByQuestion}
+        />
+      ))}
+    </div>
+  );
 };
 
 function useQuestionsAndSubmissions() {

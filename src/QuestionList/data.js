@@ -233,7 +233,18 @@ const questionsByCategory = {
   ],
 };
 
+// {
+//     CSS: [
+//       {
+//         id: "rainbow-circles",
+//         name: "Rainbow Circles",
+//       },
+//     ]
+// }
+
 const submissionsByQuestion = {
   "sign-up-form": "PARTIALLY_CORRECT",
   "rainbow-circles": "INCORRECT",
 };
+
+console.log(Object.keys(questionsByCategory));
