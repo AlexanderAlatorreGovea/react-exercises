@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+// vid answer
 
 const QUIZ_API_BASE_URL = "https://api.frontendexpert.io/api/fe/quiz";
 
 export default function Quiz() {
   // Write your code here.
   const [questions, setQuestions] = useState([]);
-  const [currQuestionIdx, setCurrQuestionIdx] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [chosenAnswers, setChosenAnswers] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -16,43 +17,58 @@ export default function Quiz() {
     };
 
     getData();
-  }, [currQuestionIdx]);
+  }, []);
 
-  const currentQuestion = questions[currQuestionIdx];
+  if (!questions.length) return [];
 
-  const selectAnswer = (index) => {
-    setQuestions((current) =>
-      current.map((obj) => {
-        if (index === currQuestionIdx) {
-          return { ...obj, selectedAnswer: index };
-        }
+  const currentQuestion = questions[currentQuestionIndex];
 
-        return obj;
-      })
-    );
+  const updateChosenAnswers = (questionIndex, answerIndex) => {
+    const newChosenAnswers = [...chosenAnswers];
+    newChosenAnswers[questionIndex] = answerIndex;
+    setChosenAnswers(newChosenAnswers);
   };
 
   return (
     <>
-      <h1>Which of the following is a built-in Reacth hook?</h1>
+      <h1>{currentQuestion.question}</h1>
       {questions.length &&
-        currentQuestion.answers.map((item, index) => {
+        currentQuestion.answers.map((answer, answerIndex) => {
+          const chosenAnswer = chosenAnswers[currentQuestionIndex];
+          let className = "answer";
+          console.log(chosenAnswer);
+          if (chosenAnswer === answerIndex) {
+            className +=
+              currentQuestion.correctAnswer === chosenAnswer
+                ? " correct"
+                : " incorrect";
+          }
+          console.log(className);
           return (
-            <div
-              className={`answer ${
-                item.selectedAnswer === item.correctAnswer
-                  ? "correct"
-                  : "incorrect"
-              }`}
-              onClick={() => selectAnswer(index)}
+            <h2
+              key={answer}
+              className={className}
+              onClick={() => {
+                updateChosenAnswers(currentQuestionIndex, answerIndex);
+              }}
             >
-              {item}
-            </div>
+              {answer}
+            </h2>
           );
         })}
 
-      <button disabled="true">Back</button>
-      <button>Next</button>
+      <button
+        onClick={() => setCurrentQuestionIndex((prevState) => prevState - 1)}
+        disabled={currentQuestionIndex === 0}
+      >
+        Back
+      </button>
+      <button
+        onClick={() => setCurrentQuestionIndex((prevState) => prevState + 1)}
+        disabled={currentQuestionIndex === questions.length - 1}
+      >
+        Next
+      </button>
     </>
   );
 }
