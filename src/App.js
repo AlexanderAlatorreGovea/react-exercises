@@ -1,11 +1,10 @@
 import { useState } from "react";
 
 import { mockData, COLUMNS } from "./mockData/mockData";
-import QuestionList from './QuestionList/QuestionList'
 import useTable from "./hooks";
+import Quiz from './Quiz/Quiz'
 
 import "./App.css";
-
 
 const PAGE_NUMBER_LIMIT = 2;
 
@@ -26,8 +25,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <QuestionList />
-      {/* <table className="table">
+      <Quiz />
+      <table className="table">
         <thead>
           {headers.map(({ label }, index) => (
             <th key={index}>{label}</th>
@@ -78,7 +77,7 @@ const App = () => {
         >
           Add Person
         </button>
-      </div> */}
+      </div>
     </div>
   );
 };
