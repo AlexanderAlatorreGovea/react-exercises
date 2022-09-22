@@ -20,7 +20,7 @@ export default function Quiz() {
 
   const currentQuestion = questions[currQuestionIdx];
 
-  const selectAnser = (index) => {
+  const selectAnswer = (index) => {
     setQuestions((current) =>
       current.map((obj) => {
         if (index === currQuestionIdx) {
@@ -44,7 +44,7 @@ export default function Quiz() {
                   ? "correct"
                   : "incorrect"
               }`}
-              onClick={() => selectAnser(index)}
+              onClick={() => selectAnswer(index)}
             >
               {item}
             </div>
