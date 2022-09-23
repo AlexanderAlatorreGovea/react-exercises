@@ -6,7 +6,8 @@ export default function Memory() {
   const tiles = shuffle([...TILE_COLORS, ...TILE_COLORS]);
   const selectedColors = new Array.fill(tiles.length);
 
-  const submitColors = () => {};
+  console.log(selectedColors);
+  const submitColors = (color, index) => {};
 
   return (
     <>
