@@ -20,7 +20,7 @@ const HEADERS = [
 
 export default function CryptoPrices() {
   // Write your code here.
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -29,23 +29,48 @@ export default function CryptoPrices() {
         `${CRYPTO_PRICES_API_BASE_URL}?page=${page}`
       );
       const json = await response.json();
-      console.log(json);
+
       setData(json);
     };
 
     getData();
-  }, []);
+  }, [page]);
+
+  const goToNextPage = () => setPage(page + 1);
+  const goToPreviousPage = () => setPage(page - 1);
+
+  if (data === null) return <div>loading..</div>;
 
   return (
     <>
       <table>
-        {HEADERS.map((header) => (
-          <th>{header.name}</th>
-        ))}
-        {}
+        <caption>Crypto Prices</caption>
+        <tbody>
+          <tr>
+            {HEADERS.map((header) => (
+              <th key={header.id} scope="col">
+                <b>{header.name}</b>
+              </th>
+            ))}
+          </tr>
+
+          {data.coins.map((coin) => (
+            <tr>
+              <th scope="row">
+                <b>{coin.name}</b>
+              </th>
+              <td>{coin.marketCap}</td>
+              <td>{coin.price}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
-      <button>Back</button>
-      <button>Next</button>
+      <button onClick={goToPreviousPage} disabled={page === 0}>
+        Back
+      </button>
+      <button onClick={goToNextPage} disabled={!data.hasNext}>
+        Next
+      </button>
     </>
   );
 }
