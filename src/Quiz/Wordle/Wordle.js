@@ -43,9 +43,11 @@ export default function Wordle() {
           event.key === "Enter" &&
           previousGuess.length === WORD_LENGTH
         ) {
-          const currentGuesIdx = guesses.findIndex((guess) => guess === null);
+          // findIndex will stop at the first value that meets the condition of 
+          // the guess being null
+          const currentGuessIdx = guesses.findIndex((guess) => guess === null);
           const guessesClone = [...guesses];
-          guesses[currentGuesIdx] = previousGuess;
+          guesses[currentGuessIdx] = previousGuess;
           setGuesses(guessesClone);
           return "";
         } else if ((previousGuess.length < WORD_LENGTH) & isLetter) {
@@ -61,5 +63,51 @@ export default function Wordle() {
     return () => window.removeEventListener("keydown", onPressKey);
   }, [solution, guesses]);
 
-  return <div className="board">{solution}</div>;
+  return (
+    <div className="board">
+      {guesses.map((guess, index) => {
+        const currentGuessIndex = guesses.findIndex((guess) => guess === null);
+
+        if (solution === null) return null;
+
+        return (
+          <GuessLine
+            key={index}
+            guess={(index === currentGuessIndex
+              ? currentGuess
+              : guess ?? ""
+            ).padEnd(WORD_LENGTH)}
+            solution={solution}
+            isFinal={currentGuessIndex > index || currentGuessIndex === -1}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function GuessLine({ guess, solution, isFinal }) {
+  return (
+    <div className="line">
+      {guess.split("").map((char, index) => {
+        let className = "tile";
+
+        if (isFinal) {
+          if (char === solution[index]) {
+            className += " correct";
+          } else if (solution.includes(char)) {
+            className += " close";
+          } else {
+            className += " incorrect";
+          }
+        }
+
+        return (
+          <div key={index} className={className}>
+            {char}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
