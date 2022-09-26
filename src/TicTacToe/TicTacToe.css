@@ -1,0 +1,19 @@
+.board {
+  width: 31rem;
+  height: 31rem;
+  margin: auto;
+  display: flex;
+  border: none;
+  flex-direction: row;
+}
+
+.square {
+  width: 33%;
+  height: 33%;
+  border: .5px solid black;
+}
+
+.square:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}

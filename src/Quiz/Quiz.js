@@ -1,4 +1,4 @@
-// vid answer
+import { useState, useEffect } from "react";
 
 const QUIZ_API_BASE_URL = "https://api.frontendexpert.io/api/fe/quiz";
 

@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import { mockData, COLUMNS } from "./mockData/mockData";
 import useTable from "./hooks";
-import Quiz from './Quiz/Quiz'
+import Quiz from "./Quiz/Quiz";
 
 import "./App.css";
+import TicTacToe from "./TicTacToe/TicTacToe";
 
 const PAGE_NUMBER_LIMIT = 2;
 
@@ -25,7 +26,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <Quiz />
+      <TicTacToe />
+      {/* <Quiz />
       <table className="table">
         <thead>
           {headers.map(({ label }, index) => (
@@ -77,7 +79,7 @@ const App = () => {
         >
           Add Person
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
