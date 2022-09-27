@@ -30,34 +30,13 @@ export const Table = () => {
         {data.headers.map((header, i) => (
           <th key={i}>{header}</th>
         ))}
-        {data.locationData.map(
-          (
-            {
-              city,
-              state,
-              country,
-              postcode,
-              number,
-              name,
-              latitude,
-              longitude,
-            },
-            i
-          ) => {
-            return (
-              <tr key={i}>
-                <td>{city}</td>
-                <td>{state}</td>
-                <td>{country}</td>
-                <td>{postcode}</td>
-                <td>{number}</td>
-                <td>{name}</td>
-                <td>{latitude}</td>
-                <td>{longitude}</td>
-              </tr>
-            );
-          }
-        )}
+        {data.locationData.map((location, index) => (
+          <tr key={index}>
+            {data.headers.map((header) => (
+              <td>{location[header]}</td>
+            ))}
+          </tr>
+        ))}
       </table>
     </div>
   );
