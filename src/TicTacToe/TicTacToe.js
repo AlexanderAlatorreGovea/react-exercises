@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { _getData } from "./data";
 
 import "./TicTacToe.css";
 
@@ -41,6 +42,17 @@ const TicTacToe = () => {
   };
 
   let player = playersTurn === PLAYER_ONE ? PLAYER_ONE_TURN : PLAYER_TWO_TURN;
+
+//   const [data, setData] = useState(null);
+//   useEffect(() => {
+//     const getData = async () => { 
+//       const response = await _getData()
+     
+//       setData(response)
+//     };
+
+//     getData()
+//   }, []);
 
   return (
     <>
