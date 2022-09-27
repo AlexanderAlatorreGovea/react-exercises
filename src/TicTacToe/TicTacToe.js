@@ -16,6 +16,9 @@ const winningCombinations = [
 
 const PLAYER_ONE = "X";
 const PLAYER_TWO = "O";
+const PLAYER_ONE_TURN = "Is player's one turn";
+const PLAYER_TWO_TURN = "Is player's two turn";
+
 const AMOUNT_OF_TILES = 9;
 const TILES = Array(AMOUNT_OF_TILES).fill("");
 
@@ -26,7 +29,6 @@ const TicTacToe = () => {
   const squareClick = (index) => {
     const boardShallowCopy = [...board];
     const currentPlayer = playersTurn === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
-
     const isPlayerDoubleClickingTile = board[index];
 
     if (isPlayerDoubleClickingTile) return;
@@ -35,22 +37,54 @@ const TicTacToe = () => {
 
     setBoard(boardShallowCopy);
     setPlayersTurn(currentPlayer);
+    checkWinner(winningCombinations, currentPlayer, boardShallowCopy);
   };
+
+  let player = playersTurn === PLAYER_ONE ? PLAYER_ONE_TURN : PLAYER_TWO_TURN;
 
   return (
     <>
       <h1>Tic Tac Toe</h1>
       <div className="board">
-        <div style={{ width: "100%" }}>
-          {board.map((tile, index) => (
-            <div className="square" onClick={() => squareClick(index)}>
+        {board.map((tile, index) => (
+          <div className="square" onClick={() => squareClick(index)}>
+            <div
+              style={{
+                width: "20px",
+                margin: "0 auto",
+              }}
+            >
               {tile}
             </div>
-          ))}
+          </div>
+        ))}
+
+        <div style={{ width: "100%" }}>
+          <p style={{ textAlign: "center" }}>{player}</p>
         </div>
       </div>
     </>
   );
 };
+
+function checkWinner(winningCombinations, currentPlayer, boardShallowCopy) {
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [columnOne, columnTwo, columnThree] = winningCombinations[i];
+
+    if (
+      boardShallowCopy[columnOne] &&
+      boardShallowCopy[columnOne] === boardShallowCopy[columnTwo] &&
+      boardShallowCopy[columnOne] === boardShallowCopy[columnThree]
+    ) {
+      setTimeout(() => {
+        alert(
+          `The winner is ${
+            currentPlayer === PLAYER_ONE ? "Player One" : "Player Two"
+          }`
+        );
+      }, 0);
+    }
+  }
+}
 
 export default TicTacToe;

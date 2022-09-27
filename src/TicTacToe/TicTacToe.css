@@ -5,12 +5,16 @@
   display: flex;
   border: none;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .square {
-  width: 33%;
+  width: 32.9%;
   height: 33%;
   border: .5px solid black;
+  display: flex;
+  align-items: center;
+  align-content: center;
 }
 
 .square:hover {
