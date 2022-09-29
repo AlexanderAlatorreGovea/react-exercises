@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Table />
+      {/* <Table /> */}
       {/* <TicTacToe /> */}
       {/* <Quiz />
       <table className="table">
