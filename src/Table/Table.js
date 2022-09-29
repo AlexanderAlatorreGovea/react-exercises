@@ -73,7 +73,7 @@ export const Table = () => {
   const getFilteredRows = (rows, filterKey) => {
     return rows.filter((row) => {
       return Object.values(row).some((s) =>
-        ("" + s).toLowerCase().includes(filterKey)
+        String(s).toLowerCase().includes(filterKey.toLowerCase())
       );
     });
   };
@@ -103,13 +103,15 @@ export const Table = () => {
             {header}
           </th>
         ))}
-        {data.locationData.map((location, index) => (
-          <tr key={index}>
-            {data.headers.map((header) => (
-              <td key={header}>{location[header]}</td>
-            ))}
-          </tr>
-        ))}
+        {getFilteredRows(data.locationData, inputValue).map(
+          (location, index) => (
+            <tr key={index}>
+              {data.headers.map((header) => (
+                <td key={header}>{location[header]}</td>
+              ))}
+            </tr>
+          )
+        )}
       </table>
     </div>
   );
