@@ -1,11 +1,10 @@
 import { useState } from "react";
-
 const useInputValue = (inputValue) => {
   const [value, setValue] = useState(inputValue);
 
   return {
-    value,
     type: "text",
+    value,
     onChange: (e) => setValue(e.target.value),
     resetValue: () => setValue(""),
   };
@@ -77,9 +76,15 @@ export const Todo = () => {
             </div>
             <div style={{ backgroundColor: "red", padding: "5px" }}>X</div>
           </div>
-        ); 
+        );
       })}
       <button onClick={() => setTodos([])}>reset todo</button>
     </div>
   );
 };
+
+function x(x, y, z) {
+  console.log(arguments);
+}
+
+x();
