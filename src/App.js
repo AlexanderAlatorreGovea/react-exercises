@@ -8,6 +8,7 @@ import "./App.css";
 import TicTacToe from "./TicTacToe/TicTacToe";
 import { Table } from "./Table/Table";
 import { Todo } from "./Todo/Todo";
+import TipCalculator2  from "./Calculator/Calculator";
 
 const PAGE_NUMBER_LIMIT = 2;
 
@@ -28,7 +29,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <Todo />
+      {/* <Todo /> */}
+      <TipCalculator2 />
       {/* <Table /> */}
       {/* <TicTacToe /> */}
       {/* <Quiz />

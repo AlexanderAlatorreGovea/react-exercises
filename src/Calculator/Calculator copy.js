@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const useValue = ({ initialValue, type, id }) => {
-  const [value, useValue] = useState(initialValue);
+  const [value, setValue] = useState(initialValue);
 
   return {
     id,
-    useValue,
+    setValue,
     value,
     type,
   };
@@ -13,11 +13,16 @@ const useValue = ({ initialValue, type, id }) => {
 
 export function TipCalculator2() {
   // Write your code here.
-  const [bill, setBill] = useState(50);
-  const [tip, setTip] = useState(18);
-  const [numberOfPeople, setNumberOfPeople] = useState(1);
+  const { setValue: setBill, ...bills } = useValue({
+    initialValue: 50,
+    type: "number",
+    id: "bill",
+  });
 
-  const totalTip = (bill * tip) / 100;
+  const [tip, setTip] = useValue(18);
+  const [numberOfPeople, setNumberOfPeople] = useValue(1);
+
+  const totalTip = (bills.bill * tip) / 100;
   const amountToPayPerPerson = totalTip / numberOfPeople;
 
   return (
@@ -26,9 +31,7 @@ export function TipCalculator2() {
       <div>
         <label htmlFor="bill">Bill</label>
         <input
-          id="bill"
-          type="number"
-          value={bill}
+          {...bills}
           min="0"
           onChange={(e) => setBill(parseInt(e.target.value))}
         />
